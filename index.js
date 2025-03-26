@@ -80,20 +80,22 @@ app.post('/validar', function (req, res) {
 
 
 //Mostrar contenido de la tabla
- const insert = "SELECT * FROM datos"
 
-conexion.query(insert, function (error,resul) {
-    console.log(resul);
-    
-    if (error) {
-        console.error("Error al traer los datos", error);
-        return res.status(500).json({ success: false, message: "Error al consultar con la base de datos" });
-    }else{
-              
-       
-    }
-    
-})
+app.get('/api/reservas', function (req, res) {
+    let consulta = "SELECT * FROM datos";
+
+    conexion.query(consulta, function (error, resultados) {
+        if (error) {
+            console.error("Error al obtener datos:", error);
+            return res.status(500).json({ error: "Error al obtener las reservas." });
+        }
+        
+        res.json(resultados); // Enviar datos como JSON
+    });
+});
+
+
+
 
 
 app.listen(3000, function () {
