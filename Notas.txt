@@ -1,0 +1,6 @@
+App de reservas 
+
+Ver las mesas resevadas 
+el user vera Fecha, Numero de mesa 
+eliminar reserva 
+poner un maximo de mesas (8)

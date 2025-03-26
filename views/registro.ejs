@@ -10,7 +10,7 @@
     <h1 style="text-align: center;">Agendar reserva</h1>
 <div class="m-5">
 
-  <form action="/validar" method="post">
+  <form id="formReserva" action="/validar" method="post">
            Nombre:
           <input type="text" name="nombre" id="nombre" required> <br> <br>
           Numero de personas:
@@ -23,12 +23,18 @@
           <input type="number" name="mesa" id="mesa" required><br> <br>
   
           <input type="submit" value="Enviar" id="enviar">
-          
+        
       </form>
 </div>
 
-    <script src="/Scrpts/main.js" ></script>
-    <script src="/Scrpts/Conexion.js" ></script>
+<div style="align-items: center;" class="m-5">
+  Consultar reservas <br> <br>
+  <input type="submit" value="Enviar" id="enviar">
+</div>
+
+
+    <script src="/main.js" defer></script> 
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>

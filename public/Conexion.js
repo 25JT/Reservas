@@ -1,11 +1,12 @@
-let mysql = require('mysql');
-
+import mysql from 'mysql';
 let conexion = mysql.createConnection({
     host: 'localhost',
     database: 'reserva',
     user: 'root',
     password: '',
 });
+
+export default conexion;
 
 conexion.connect(function (error) {
     if (error) {
@@ -16,6 +17,10 @@ conexion.connect(function (error) {
         
     }
 });
+
+
+// 
+
 
 
 // //INSERTAR
