@@ -1,7 +1,8 @@
-//console.log("Conexión main.js establecida");
+document.addEventListener("DOMContentLoaded", cargarReservas);
 
 document.getElementById("formReserva").addEventListener("submit", function (event) {
-    event.preventDefault(); // Evita que la página se recargue
+    event.preventDefault();
+    let idReserva = document.getElementById("idReserva").value;
 
     let formData = {
         nombre: document.getElementById("nombre").value,
@@ -11,43 +12,47 @@ document.getElementById("formReserva").addEventListener("submit", function (even
         mesa: document.getElementById("mesa").value
     };
 
-    console.log("Datos enviados:", formData); // Verifica los datos en la consola
+    let url = idReserva ? `/api/reservas/${idReserva}` : "/validar";
+    let method = idReserva ? "PUT" : "POST";
 
-    fetch("/validar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+    fetch(url, {
+        method: method,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
     })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message); // Muestra la alerta con la respuesta del servidor
-            if (data.success) {
-
-                window.location.reload();
-                //document.getElementById("formReserva").reset(); // Limpia el formulario si la reserva fue exitosa
-            }
-        })
-        .catch(error => console.error("Error:", error));
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) {
+            document.getElementById("formReserva").reset();
+            document.getElementById("idReserva").value = "";
+            document.getElementById("enviar").style.display = "inline-block";
+            document.getElementById("actualizar").style.display = "none";
+            cargarReservas();
+        }
+    })
+    .catch(error => console.error("Error:", error));
 });
 
 function cargarReservas() {
-    fetch('/api/reservas') // Petición al servidor
-        .then(response => response.json()) // Convertimos la respuesta en JSON
+    fetch('/api/reservas')
+        .then(response => response.json())
         .then(reservas => {
+            let lista = document.getElementById("listaReservas");
+            lista.innerHTML = "";  // 🔹 Limpiar contenido antes de agregar nuevos datos
+
             let contenido = `<h2>Reservas Actuales</h2>     
             <table class="table">
-                <thead> 
+                <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Número de personas</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Número de mesa</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Eliminar</th>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Número de personas</th>
+                        <th>Fecha</th>
+                        <th>Teléfono</th>
+                        <th>Número de mesa</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>`;
@@ -61,41 +66,42 @@ function cargarReservas() {
                         <td>${new Date(reserva.fecha).toLocaleDateString()}</td>
                         <td>${reserva.telefono}</td>
                         <td>${reserva.n_mesa}</td>
-                        <td><button type="button" class="btn btn-primary" onclick="editar(${reserva.Id})">Cambiar</button></td>
-                        <td><button type="button" class="btn btn-danger" onclick="eliminar(${reserva.Id})">Eliminar</button></td>
+                        <td><button class="btn btn-primary" onclick="editar(${reserva.Id})">Editar</button></td>
+                        <td><button class="btn btn-danger" onclick="eliminar(${reserva.Id})">Eliminar</button></td>
                     </tr>`;
             });
 
             contenido += `</tbody></table>`;
-            document.getElementById("listaReservas").innerHTML = contenido;
+            lista.innerHTML = contenido;
         })
         .catch(error => console.error("Error cargando reservas:", error));
 }
-// Llamamos a la función cuando la página se carga
-window.onload = cargarReservas;
 
-//ELIMINAR
+
+function editar(id) {
+    fetch(`/api/reservas/${id}`) // Obtener los datos de la reserva
+        .then(response => response.json())
+        .then(reserva => {
+            document.getElementById("idReserva").value = id;
+            document.getElementById("nombre").value = reserva.nombre;
+            document.getElementById("personas").value = reserva.n_personas;
+            document.getElementById("fecha").value = reserva.fecha.split("T")[0];
+            document.getElementById("telefono").value = reserva.telefono;
+            document.getElementById("mesa").value = reserva.n_mesa;
+
+            document.getElementById("enviar").value = "Actualizar";
+        })
+        .catch(error => console.error("Error obteniendo reserva:", error));
+}
+
 function eliminar(id) {
     if (confirm("¿Estás seguro de que quieres eliminar esta reserva?")) {
         fetch(`/api/reservas/${id}`, { method: "DELETE" })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error ${response.status}: No se pudo eliminar`);
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 alert(data.message);
-                if (data.success) {
-                    cargarReservas(); // Recargar la lista sin refrescar la página
-                }
+                if (data.success) cargarReservas();
             })
             .catch(error => console.error("Error al eliminar:", error));
     }
 }
-
-//Editar 
-
-
-
-

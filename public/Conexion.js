@@ -15,6 +15,7 @@ conexion.connect(function (error) {
     } else {
         console.log('Conexion correcta');
         
+        
     }
 });
 
