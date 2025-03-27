@@ -61,8 +61,6 @@ app.post('/validar', function (req, res) {
             return res.json({ success: false, message: `La mesa ${nMesa} no está disponible. Mesas disponibles: ${mesasDisponibles.join(", ")}` });
         }
 
-        
-
         let insertar = "INSERT INTO datos (nombre, n_personas, fecha, telefono, n_mesa) VALUES (?, ?, ?, ?, ?)";
         let valores = [nombre, nPersonas, fecha, telefono, nMesa];
 
@@ -73,7 +71,9 @@ app.post('/validar', function (req, res) {
             }
 
             console.log("Datos insertados correctamente");
+            
             return res.json({ success: true, message: "Reserva creada con éxito." });
+
         });
     });
 });
@@ -94,6 +94,24 @@ app.get('/api/reservas', function (req, res) {
     });
 });
 
+//Eliminar usuario
+app.delete('/api/reservas/:id', (req, res) => {
+    const reservaId = req.params.id;
+    const sql = "DELETE FROM datos WHERE Id = ?";
+
+    conexion.query(sql, [reservaId], (err, result) => {
+        if (err) {
+            console.error("Error eliminando reserva:", err);
+            res.status(500).json({ success: false, message: "Error eliminando reserva" });
+        } else {
+            if (result.affectedRows > 0) {
+                res.json({ success: true, message: "Reserva eliminada exitosamente" });
+            } else {
+                res.status(404).json({ success: false, message: "Reserva no encontrada" });
+            }
+        }
+    });
+});
 
 
 

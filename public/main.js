@@ -1,4 +1,4 @@
-console.log("Conexión main.js establecida");
+//console.log("Conexión main.js establecida");
 
 document.getElementById("formReserva").addEventListener("submit", function (event) {
     event.preventDefault(); // Evita que la página se recargue
@@ -25,7 +25,8 @@ document.getElementById("formReserva").addEventListener("submit", function (even
             alert(data.message); // Muestra la alerta con la respuesta del servidor
             if (data.success) {
 
-                document.getElementById("formReserva").reset(); // Limpia el formulario si la reserva fue exitosa
+                window.location.reload();
+                //document.getElementById("formReserva").reset(); // Limpia el formulario si la reserva fue exitosa
             }
         })
         .catch(error => console.error("Error:", error));
@@ -45,8 +46,8 @@ function cargarReservas() {
                         <th scope="col">Fecha</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col">Número de mesa</th>
-                        <th scope="col">Acción</th>
-                        <th scope="col">Acción</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>`;
@@ -60,8 +61,8 @@ function cargarReservas() {
                         <td>${new Date(reserva.fecha).toLocaleDateString()}</td>
                         <td>${reserva.telefono}</td>
                         <td>${reserva.n_mesa}</td>
-                        <td><button type="button" class="btn btn-primary">Acción</button></td>
-                        <td><button type="button" class="btn btn-primary">Acción</button></td>
+                        <td><button type="button" class="btn btn-primary" onclick="editar(${reserva.Id})">Cambiar</button></td>
+                        <td><button type="button" class="btn btn-danger" onclick="eliminar(${reserva.Id})">Eliminar</button></td>
                     </tr>`;
             });
 
@@ -70,7 +71,31 @@ function cargarReservas() {
         })
         .catch(error => console.error("Error cargando reservas:", error));
 }
-
-
 // Llamamos a la función cuando la página se carga
 window.onload = cargarReservas;
+
+//ELIMINAR
+function eliminar(id) {
+    if (confirm("¿Estás seguro de que quieres eliminar esta reserva?")) {
+        fetch(`/api/reservas/${id}`, { method: "DELETE" })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: No se pudo eliminar`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message);
+                if (data.success) {
+                    cargarReservas(); // Recargar la lista sin refrescar la página
+                }
+            })
+            .catch(error => console.error("Error al eliminar:", error));
+    }
+}
+
+//Editar 
+
+
+
+
