@@ -162,52 +162,64 @@ app.put('/api/reservas/:id', function (req, res) {
     }
 
     // **Obtener la mesa actual de la reserva**
-    let consultaMesaActual = "SELECT n_mesa FROM datos WHERE Id=?";
+    let consultaMesaActual = "SELECT fecha, n_mesa FROM datos WHERE Id=?";
 
     conexion.query(consultaMesaActual, [reservaId], function (error, resultado) {
         if (error) {
-            console.error("Error verificando mesa actual:", error);
-            return res.status(500).json({ success: false, message: "Error al verificar la mesa actual." });
+            console.error("Error verificando reserva actual:", error);
+            return res.status(500).json({ success: false, message: "Error al verificar la reserva actual." });
         }
     
         if (resultado.length === 0) {
             return res.status(404).json({ success: false, message: "Reserva no encontrada." });
         }
     
+        let fechaActual = resultado[0].fecha;
         let mesaActual = resultado[0].n_mesa;
     
-        // **Si la mesa no ha cambiado, solo actualizamos la reserva**
-        if (parseInt(mesa) === mesaActual) {
+        // **Si la fecha y la mesa no cambian, actualizamos directamente**
+        if (fecha === fechaActual && parseInt(mesa) === mesaActual) {
             return actualizarReserva();
         }
     
-        // **Verificar si la nueva mesa está disponible**
-        let consultaMesasDisponibles = `
-            SELECT n FROM (
-                SELECT 1 AS n UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 
-                UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8
-            ) AS all_mesas
-            WHERE n NOT IN (SELECT n_mesa FROM datos WHERE fecha = ? AND Id <> ?)`;
+        // **Verificar si la mesa ya está reservada en la nueva fecha**
+        let consultaMesaReservada = `SELECT COUNT(*) AS count FROM datos WHERE fecha = ? AND n_mesa = ? AND Id <> ?`;
     
-        conexion.query(consultaMesasDisponibles, [fecha, reservaId], function (error, resultado) {
+        conexion.query(consultaMesaReservada, [fecha, mesa, reservaId], function (error, resultado) {
             if (error) {
-                console.error("Error verificando mesas disponibles:", error);
-                return res.status(500).json({ success: false, message: "Error al verificar disponibilidad de mesas." });
+                console.error("Error verificando disponibilidad de la mesa:", error);
+                return res.status(500).json({ success: false, message: "Error al verificar disponibilidad de la mesa." });
             }
     
-            let mesasDisponibles = resultado.map(row => row.n);
+            let mesaOcupada = resultado[0].count > 0;
     
-            // **Si la mesa elegida no está disponible, mostrar las opciones disponibles**
-            if (!mesasDisponibles.includes(parseInt(mesa))) {
-                return res.status(400).json({
-                    success: false,
-                    message: `La mesa ${mesa} ya está reservada en esa fecha. Mesas disponibles: ${mesasDisponibles.join(", ")}`,
-                    mesasDisponibles
+            if (mesaOcupada) {
+                // **Obtener mesas disponibles**
+                let consultaMesasDisponibles = `
+                    SELECT n FROM (
+                        SELECT 1 AS n UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 
+                        UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8
+                    ) AS all_mesas
+                    WHERE n NOT IN (SELECT n_mesa FROM datos WHERE fecha = ?)`;
+    
+                conexion.query(consultaMesasDisponibles, [fecha], function (error, resultadoMesas) {
+                    if (error) {
+                        console.error("Error obteniendo mesas disponibles:", error);
+                        return res.status(500).json({ success: false, message: "Error al verificar mesas disponibles." });
+                    }
+    
+                    let mesasDisponibles = resultadoMesas.map(row => row.n);
+    
+                    return res.status(400).json({
+                        success: false,
+                        message: `La mesa ${mesa} ya está reservada en la fecha ${fecha}. Mesas disponibles: ${mesasDisponibles.join(", ")}`,
+                        mesasDisponibles: mesasDisponibles
+                    });
                 });
+            } else {
+                // **Si la mesa está disponible, proceder con la actualización**
+                actualizarReserva();
             }
-    
-            // **Si la mesa está disponible, actualizar la reserva**
-            actualizarReserva();
         });
     });
     
@@ -227,6 +239,8 @@ app.put('/api/reservas/:id', function (req, res) {
             }
         });
     }
+    
+
 })    
 
 
