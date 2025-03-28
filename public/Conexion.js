@@ -1,9 +1,13 @@
-import mysql from 'mysql';
+import mysql from 'mysql2';
+import dotenv from 'dotenv';
+dotenv.config();
 let conexion = mysql.createConnection({
-    host: 'localhost',
-    database: 'reserva',
-    user: 'root',
-    password: '',
+    host: process.env.host,
+    database: process.env.database,
+    user: process.env.user,
+    password: process.env.password,
+    port: process.env.port
+    
 });
 
 export default conexion;
