@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", cargarReservas);
 
 document.getElementById("Ptext").innerHTML = "RESERVAS GO!"
+document.getElementById("Ptext2").innerHTML="VISTA DE NUESTRO SISTEMA"
 
 document.getElementById("formReserva").addEventListener("submit", function (event) {
     event.preventDefault();
