@@ -22,10 +22,10 @@
 
       <div class="imagen-container col start">
         <img class="animate__animated animate__fadeIn" id="im1" src="/Imagenes/Imagenes 1/fondo.png" alt="">
-        <img class=" animate__animated animate__fadeInLeft" id="im2" src="/Imagenes/Imagenes 1/atendedor.png" alt="">
-        <img class=" animate__animated animate__fadeInRight" id="im3" src="/Imagenes/Imagenes 1/dos personas ymesa.png"
+        <img class=" animate__animated animate__fadeInLeft" id="im4" src="/Imagenes/Imagenes 1/atendedor.png" alt="">
+        <img class=" animate__animated animate__fadeInRight"  src="/Imagenes/Imagenes 1/dos personas ymesa.png"
           alt="">
-        <img class=" animate__animated animate__fadeInRight" id="im4"
+        <img class=" animate__animated animate__fadeInRight" 
           src="/Imagenes/Imagenes 1/Coffee shop-encimera.png" alt="">
 
 
@@ -45,7 +45,7 @@
       <img src="" class="img-fondo ">
       <div class="txt">
         PARA NOSOTROS ES MUY IMPORTANTE QUE TUS CLIENTES SEAN GESTIONADOS DE LA MEJOR FORMA, PARA QUE NO TENGAS QUE
-        PERDER TIEMPO Y TE ENFOQUE EN LO QUE VERDADERA MENTE IMPORTA
+        PERDER TIEMPO Y TE ENFOQUES EN LO QUE VERDADERA MENTE IMPORTA
       </div>
     </div>
 
@@ -58,59 +58,99 @@
   <br>
 
   <section class="contenedor">
-    
-      <h2 class="texto2 animate__animated animate__bounceIn">CREA TU RESERVA</h2>
-  
-      <div class="contenedor-div row align-items-start">
-    
-        <div class="imagen-conta col">
-          <img class="animate__animated animate__fadeIn" id="im1" src="/Imagenes/Imagenes 2/coffee cup-pana fondo.png"
-            alt="">
-          <img class=" animate__animated animate__fadeInLeft" id="im2" src="/Imagenes/Imagenes 2/coffee cup-pana1.png"
-            alt="">
-          <img class=" animate__animated animate__fadeInRight" id="im3" src="/Imagenes/Imagenes 2/coffee cup-pana2.png"
-            alt="">
-          <img class=" animate__animated animate__fadeInRight" id="im3" src="/Imagenes/Imagenes 2/coffee cup-pana3.png"
-            alt="">
-        </div>
-      
+
+    <h2 class="texto2 animate__animated animate__bounceIn">CREA TU RESERVA</h2>
+
+    <div class="contenedor-div row align-items-start">
+
+      <div class="imagen-conta col">
+        <img class="animate__animated animate__fadeIn" id="im1" src="/Imagenes/Imagenes 2/coffee cup-pana fondo.png"
+          alt="">
+        <img class=" animate__animated animate__fadeInLeft" id="im2" src="/Imagenes/Imagenes 2/coffee cup-pana1.png"
+          alt="">
+        <img class=" animate__animated animate__fadeInRight" id="im3" src="/Imagenes/Imagenes 2/coffee cup-pana2.png"
+          alt="">
+        <img class=" animate__animated animate__fadeInRight" id="im4" src="/Imagenes/Imagenes 2/coffee cup-pana3.png"
+          alt="">
       </div>
+
+    </div>
   </section>
-
-
-
-
-
-
-
-
-
-
-  <div class="m-5">
-    <form id="formReserva">
-      <input type="hidden" id="idReserva">
-      <label>Nombre:</label>
-      <input type="text" name="nombre" id="nombre" required><br><br>
-      <label>Número de personas:</label>
-      <input type="number" name="personas" id="personas" required><br><br>
-      <label>Fecha:</label>
-      <input type="date" name="fecha" id="fecha" required><br><br>
-      <label>Teléfono:</label>
-      <input type="number" name="telefono" id="telefono" required><br><br>
-      <label>Número de mesa:</label>
-      <input type="number" name="mesa" id="mesa" required><br><br>
-      <button type="submit" id="enviar" class="btn btn-success">Enviar</button>
-      <button type="button" id="actualizar" class="btn btn-warning" style="display:none;">Actualizar</button>
-    </form>
-  </div>
   <br>
 
+  <section style="margin: 0px 0px 40px 0px;">
+    <div class="container">
+      <form id="formReserva" class="p-4 shadow rounded contform">
+        <input type="hidden" id="idReserva">
 
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese su nombre" required>
+          </div>
+          <div class="col-md-6">
+            <label for="personas" class="form-label">Número de personas:</label>
+            <input type="number" class="form-control" name="personas" id="personas" min="1" placeholder="Ej. 2"
+              required>
+          </div>
+        </div>
 
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <label for="fecha" class="form-label">Fecha:</label>
+            <input type="date" class="form-control" name="fecha" id="fecha" required>
+          </div>
+          <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono:</label>
+            <input type="tel" class="form-control" name="telefono" id="telefono" pattern="[0-9]{10}"
+              title="Ingrese un número válido de 10 dígitos" placeholder="Ej. 3001234567" required>
+          </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <label for="mesa" class="form-label">Número de mesa:</label>
+            <input type="number" class="form-control" name="mesa" id="mesa" min="1" required placeholder="Solo disponemos de 8 mesas">
+          </div>
+          <div class="col-md-6 d-flex align-items-end">
+            <button type="submit" id="enviar" class="btn btn-success w-100">Enviar</button>
+            <button type="button" id="actualizar" class="btn btn-warning w-100 ms-2"
+              style="display:none;">Actualizar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+  <br>
+<section>
   <div style="align-items: center;" id="listaReservas" class="m-5">
-    <h1>Listas de reservas </h1>
+    <!--genera las reservas-->  
+    </div>
+</section>
+<br>
+<footer class="">
+  <div class="container text-center">
+    <div class="row d-flex justify-content-center align-items-center">
+      <!-- Columna de contacto -->
+      <div class="col d-flex flex-column align-items-center">
+        <h1>Contacto</h1>
+        <h1>65654</h1>
+      </div>
+      
+      <!-- Columna de imagen -->
+      <div class="imagenfot col d-flex justify-content-center">
+        <img class="img-fluid" src="Imagenes/Imagenes 3/coffee cup-bro.png" id="imgfooter" alt="Imagen">
+      </div>
 
+      <!-- Columna del botón -->
+      <div class="col d-flex justify-content-center">
+        <button class="btn btn-success w-100">WHATSAPP</button>
+      </div>
+    </div>
   </div>
+</footer>
+
+ 
 
 
   <script src="/main.js" defer></script>

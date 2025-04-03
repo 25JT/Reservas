@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", cargarReservas);
 document.getElementById("Ptext").innerHTML = "RESERVAS GO!"
 document.getElementById("Ptext2").innerHTML="VISTA DE NUESTRO SISTEMA"
 
+
 document.getElementById("formReserva").addEventListener("submit", function (event) {
     event.preventDefault();
     let idReserva = document.getElementById("idReserva").value;
@@ -44,24 +45,30 @@ function cargarReservas() {
             let lista = document.getElementById("listaReservas");
             lista.innerHTML = "";  // 🔹 Limpiar contenido antes de agregar nuevos datos
 
-            let contenido = `<h2>Reservas Actuales</h2>     
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Número de personas</th>
-                        <th>Fecha</th>
-                        <th>Teléfono</th>
-                        <th>Número de mesa</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>`;
+            let contenido = `
+            <nav class="navbar m-2">
+                <h1 class="text-center" id="Ptext3">ESTAS SON LAS RESERVAS QUE TIENES ACTIVAS</h1>
+            </nav>   
+            <br>
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-center">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>N° Personas</th>
+                                <th>Fecha</th>
+                                <th>Teléfono</th>
+                                <th>N° Mesa</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
 
             reservas.forEach(reserva => {
-                contenido += ` 
+                contenido += `
                     <tr>
                         <td>${reserva.Id}</td>
                         <td>${reserva.nombre}</td>
@@ -69,12 +76,12 @@ function cargarReservas() {
                         <td>${new Date(reserva.fecha).toLocaleDateString()}</td>
                         <td>${reserva.telefono}</td>
                         <td>${reserva.n_mesa}</td>
-                        <td><button class="btn btn-primary" onclick="editar(${reserva.Id})">Editar</button></td>
-                        <td><button class="btn btn-danger" onclick="eliminar(${reserva.Id})">Eliminar</button></td>
+                        <td><button class="btn btn-primary btn-sm" onclick="editar(${reserva.Id})">Editar</button></td>
+                        <td><button class="btn btn-danger btn-sm" onclick="eliminar(${reserva.Id})">Eliminar</button></td>
                     </tr>`;
             });
 
-            contenido += `</tbody></table>`;
+            contenido += `</tbody></table></div></div>`;
             lista.innerHTML = contenido;
         })
         .catch(error => console.error("Error cargando reservas:", error));
