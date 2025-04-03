@@ -22,3 +22,12 @@ npm install dotenv
 
 intalar todo
 npm install express cors dotenv mysql2 nodemon
+
+
+Producto minimo viable 
+Actualizacion
+boton para buscar mi reserva
+funcionalidad al bont wpp
+
+versiones muy futuras si es necesario
+login 
