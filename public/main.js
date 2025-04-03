@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", cargarReservas);
 
+document.getElementById("Ptext").innerHTML = "RESERVAS GO!"
+
 document.getElementById("formReserva").addEventListener("submit", function (event) {
     event.preventDefault();
     let idReserva = document.getElementById("idReserva").value;
