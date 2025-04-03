@@ -176,8 +176,12 @@ table{
 }
 #imgfooter{ animation: move2 1.5s infinite; }
 
-
-
+.swal2-actions{
+    gap: 10px;
+}
+.swal2-confirm{
+    background:#01ca01;
+}
 
 /* Animaciones */
 @keyframes move1 {
@@ -288,5 +292,4 @@ font-size: 20px;
     .imagen-conta img {
        display: none;
     }
-    
 }

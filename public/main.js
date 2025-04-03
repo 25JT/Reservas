@@ -26,7 +26,12 @@ document.getElementById("formReserva").addEventListener("submit", function (even
     })
     .then(response => response.json())
     .then(data => {
-        alert(data.message);
+      Swal.fire({
+        title: data.success ? "¡Éxito!" : "Error",
+        text: data.message,
+        icon: data.success ? "success" : "error",
+        confirmButtonText: "Aceptar"
+    }).then(() => {
         if (data.success) {
             document.getElementById("formReserva").reset();
             document.getElementById("idReserva").value = "";
@@ -34,6 +39,8 @@ document.getElementById("formReserva").addEventListener("submit", function (even
             document.getElementById("actualizar").style.display = "none";
             cargarReservas();
         }
+    }); 
+    
     })
     .catch(error => console.error("Error:", error));
 });
@@ -105,13 +112,47 @@ function editar(id) {
 }
 
 function eliminar(id) {
-    if (confirm("¿Estás seguro de que quieres eliminar esta reserva?")) {
-        fetch(`/api/reservas/${id}`, { method: "DELETE" })
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "No, cancelar",
+        
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`/api/reservas/${id}`, { method: "DELETE" })
             .then(response => response.json())
             .then(data => {
-                alert(data.message);
-                if (data.success) cargarReservas();
+              swalWithBootstrapButtons.fire({
+                title: "¡Eliminado!",
+                text: data.message,
+                icon: "success"
+              });
+    
+              if (data.success) cargarReservas();
             })
-            .catch(error => console.error("Error al eliminar:", error));
+            .catch(error => {
+              console.error("Error al eliminar:", error);
+              Swal.fire("Error", "No se pudo eliminar la reserva", "error");
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelado",
+            text: "Tu reserva está segura",
+            icon: "error"
+          });
+        }
+      });
     }
-}
+
+
+    
