@@ -24,6 +24,7 @@ app.post('/validar', function (req, res) {
     let nombre = datos.nombre;
     let nPersonas = datos.personas;
     let fecha = datos.fecha;
+    let hora = datos.hora;
     let telefono = datos.telefono;
     let nMesa = parseInt(datos.mesa, 10);
 
@@ -71,8 +72,8 @@ app.post('/validar', function (req, res) {
     });
     function crearReserva() {
         // Insertar la nueva reserva
-        let insertar = "INSERT INTO datos (nombre, n_personas, fecha, telefono, n_mesa) VALUES (?, ?, ?, ?, ?)";
-        let valores = [nombre, nPersonas, fecha, telefono, nMesa];
+        let insertar = "INSERT INTO datos (nombre, n_personas, fecha, hora, telefono, n_mesa) VALUES (?, ?, ?, ?, ?, ?)";
+        let valores = [nombre, nPersonas, fecha, hora, telefono, nMesa];
 
         conexion.query(insertar, valores, function (error, result) {
             if (error) {
@@ -141,7 +142,7 @@ app.get('/api/reservas/:id', function (req, res) {
 // Actualizar una reserva
 app.put('/api/reservas/:id', function (req, res) {
     const reservaId = req.params.id;
-    const { nombre, personas, fecha, telefono, mesa } = req.body;
+    const { nombre, personas, fecha, hora, telefono, mesa } = req.body;
 
 
     // Validar número de mesa
@@ -226,8 +227,8 @@ app.put('/api/reservas/:id', function (req, res) {
     });
     
     function actualizarReserva() {
-        let consultaActualizar = "UPDATE datos SET nombre=?, n_personas=?, fecha=?, telefono=?, n_mesa=? WHERE Id=?";
-        let valores = [nombre, personas, fecha, telefono, mesa, reservaId];
+        let consultaActualizar = "UPDATE datos SET nombre=?, n_personas=?, fecha=?, hora=?, telefono=?,  n_mesa=? WHERE Id=?";
+        let valores = [nombre, personas, fecha, hora, telefono, mesa, reservaId];
     
         conexion.query(consultaActualizar, valores, function (error, resultado) {
             if (error) {
