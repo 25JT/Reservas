@@ -138,7 +138,7 @@
               <option value="18:00">6:00 PM</option>
               <option value="19:00">7:00 PM</option>
               <option value="20:00">8:00 PM</option>
-              <option value="21:00">9:00 PM</option>   
+              <option value="21:00">9:00 PM</option>
               <option value="22:00">10:00 PM</option>
               <option value="23:00">11:00 PM</option>
             </select>
@@ -149,7 +149,7 @@
               placeholder="Solo disponemos de 8 mesas">
           </div>
         </div>
-<br>
+        <br>
         <div class=" d-flex align-items-end">
           <button type="submit" id="enviar" class="btn btn-success w-100">Enviar</button>
           <button type="button" id="actualizar" class="btn btn-warning w-100 ms-2"
@@ -159,6 +159,35 @@
     </div>
   </section>
   <br>
+
+  <nav class="navbar m-2">
+    <h1 class="text-center" style="text-transform: uppercase;" >Mi reserva como cliente</h1>
+  </nav>
+  <br>
+  <section style="margin: 0px 0px 40px 0px;">
+    <div class="container">
+      <form id="formConsulta" class="p-4 shadow rounded contform">
+        <div class="row">
+          <div class="">
+            <label for="nombre" class="form-label w-100">Numero de Registro:</label>
+            <input type="text" class="form-control" name="nregisto" id="nregisto" placeholder="Ingrese el numero de la reserva #" required>
+          </div>
+          
+        </div>
+        <div id="resultadoConsulta"></div>
+        <br>
+
+        <br>
+        <div class=" d-flex align-items-end">
+          <button type="submit" id="consultaR" class="btn btn-success w-100">Consulta tu reserva</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+
+
+
   <section>
     <div style="align-items: center;" id="listaReservas" class="m-5">
       <!--genera las reservas-->
@@ -185,7 +214,7 @@
 
         <!-- Columna del botón -->
         <div class="col d-flex justify-content-center">
-          <button class="btn btn-success w-100" onclick="alerta()">WHATSAPP</button>
+          <button class="btn btn-success w-100" onclick="msj()">WHATSAPP</button>
         </div>
       </div>
     </div>

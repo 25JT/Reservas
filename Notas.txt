@@ -26,9 +26,11 @@ npm install express cors dotenv mysql2 nodemon
 
 Producto minimo viable 
 Actualizacion
-boton para buscar mi reserva
-funcionalidad al bont wpp
+Listo:  boton para buscar mi reserva
+Listo: funcionalidad al bont wpp
 corregir la logica de  agendamiento y edicion de mesas cada mesa debe estar disponibles 1 hora despues
+agregar notificaciones por WhatsApp, correo o Telegram...
+
 
 versiones muy futuras si es necesario
 login 
