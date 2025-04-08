@@ -95,7 +95,7 @@ app.post('/validar', function (req, res) {
                 const Idilt = ultimoId;
                 
             console.log("Datos insertados correctamente", IdUlt);
-            return res.json({ success: true, message:`Reserva creada con éxito. ID: ${Idilt}`, id: Idilt });
+            return res.json({ success: true, message:`Reserva creada con éxito. No pierdas tu  ID de reserva ➡️: ${Idilt}`, id: Idilt });
             })
 
         });
