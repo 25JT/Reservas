@@ -184,8 +184,7 @@ function renderizarReservas(reservas) {
               <th>Hora</th>
               <th>Teléfono</th>
               <th>N° Mesa</th>
-              <th>Editar</th>
-              <th>Eliminar</th>
+          
             </tr>
           </thead>
           <tbody>
@@ -198,8 +197,7 @@ function renderizarReservas(reservas) {
                 <td>${reserva.hora}</td>
                 <td>${reserva.telefono}</td>
                 <td>${reserva.n_mesa}</td>
-                <td><button class="btn btn-primary btn-sm" onclick="editar(${reserva.Id})">Editar</button></td>
-                <td><button class="btn btn-danger btn-sm" onclick="eliminar(${reserva.Id})">Eliminar</button></td>
+    
               </tr>
             `).join('')}
           </tbody>
