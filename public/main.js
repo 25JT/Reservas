@@ -300,7 +300,7 @@ function limpiarFormularioConsulta() {
 
 function msj() {
   numero = 3014414701
-  window.open(`https://wa.me/${numero}?text=Hola, tengo una consulta sobre mi reserva`, "_blank");
+  window.open(`https://wa.me/${numero}?text=Hola, tengo una consulta, Megutaria una pagina web`, "_blank");
   
 }
 
