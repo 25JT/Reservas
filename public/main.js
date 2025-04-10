@@ -305,6 +305,6 @@ function msj() {
 }
 
 function VistaAdd() {
-  window.open("http://localhost:3000/","_blank")
+  window.open("https://vista-reservas.onrender.com","_blank")
   
 }
