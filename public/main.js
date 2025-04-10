@@ -303,3 +303,8 @@ function msj() {
   window.open(`https://wa.me/${numero}?text=Hola, tengo una consulta sobre mi reserva`, "_blank");
   
 }
+
+function VistaAdd() {
+  window.open("http://localhost:3000/","_blank")
+  
+}
